@@ -1,0 +1,29 @@
+{
+  "siteName": {
+    "value": "beesportal"
+  },
+  "hostingPlanName": {
+    "value": "beesportalserviceplan"
+  },
+  "siteLocation": {
+    "value": "North Europe"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "siteMode": {
+    "value": "Limited"
+  },
+  "computeMode": {
+    "value": "0"
+  },
+  "subscriptionId": {
+    "value": "1982b9f6-5afd-4270-be84-fc30a03d004d"
+  },
+  "resourceGroup": {
+    "value": "Bees-NorthEurope"
+  }
+}

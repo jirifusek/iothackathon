@@ -1,0 +1,151 @@
+﻿@model Hackathon.BeesPortal.Web.Models.DataSegmentViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Bee hives portal</h1>
+    <p class="lead">Intelligent bee hives monitoring.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="col-md-12" style="margin-bottom: 2px">
+                <div id="map" style="height: 300px; width: 300px;"></div>
+                <script>
+                    function initMap() {
+                        var myLatLng = { lat: 49.502280, lng: 18.213511 };
+                        var mapDiv = document.getElementById("map");
+                        var map = new google.maps.Map(mapDiv, { center: myLatLng, zoom: 18 });
+                        var marker = new google.maps.Marker({ position: myLatLng, map: map, title: "Vcelin 1" });
+                    }
+                </script>
+            </div>
+
+            <h3>Apiaries</h3>
+            <table>
+                <tr>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        Label
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                </tr>
+
+                @foreach (var apiary in Model.Apiaries)
+                {
+                    <tr style="border-bottom: 1px solid silver; height: 22px;">
+
+                        <td style="width: 150px">@Html.DisplayFor(model => apiary.Username)</td>
+                        <td style="width: 150px">@Html.DisplayFor(model => apiary.Label)</td>
+                        <td style="width: 150px">@Html.DisplayFor(model => apiary.Location)</td>
+                    </tr>
+                }
+            </table>
+
+            <h3>Hives</h3>
+            <table>
+                <tr>
+                    <th>
+                        SigfoxId
+                    </th>
+                    <th>
+                        ApiaryId
+                    </th>
+                </tr>
+
+                @foreach (var hive in Model.Hives)
+                {
+                    <tr style="border-bottom: 1px solid silver; height: 22px;">
+
+                        <td style="width: 150px">@Html.DisplayFor(model => hive.SigfoxId)</td>
+                        <td style="width: 150px">@Html.DisplayFor(model => hive.ApiaryId)</td>
+                    </tr>
+                }
+            </table>
+
+            <h3 style="color: red">Notifications</h3>
+            <table>
+                <tr>
+                    <th>
+                        SigfoxId
+                    </th>
+                    <th>
+                        Severity
+                    </th>
+                    <th>
+                        Text
+                    </th>
+                    <th>
+                        DateTime
+                    </th>
+                    <th>
+                        Setup
+                    </th>
+                </tr>
+
+                @foreach (var notification in Model.Notifications)
+                {
+                    if (notification.Severity == "ALARM")
+                    {
+                        <tr style="border-bottom: 1px solid silver; height: 22px;">
+
+                            <td style="color: red; font-weight: bold; width: 150px;">@Html.DisplayFor(model => notification.SigfoxId)</td>
+                            <td style="color: red; font-weight: bold; width: 150px;">@Html.DisplayFor(model => notification.Severity)</td>
+                            <td style="color: red; font-weight: bold; width: 350px;">@Html.DisplayFor(model => notification.Text)</td>
+                            <td style="color: red; font-weight: bold; width: 300px;">@Html.DisplayFor(model => notification.DateTime)</td>
+                            <td style="width: 250px;">@Html.ActionLink("Mark as viewed", "Test", "Home", new {id = notification.Id}, null)</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr style="border-bottom: 1px solid silver; height: 22px;">
+
+                            <td style="width: 150px">@Html.DisplayFor(model => notification.SigfoxId)</td>
+                            <td style="width: 150px">@Html.DisplayFor(model => notification.Severity)</td>
+                            <td style="width: 350px">@Html.DisplayFor(model => notification.Text)</td>
+                            <td style="width: 300px">@Html.DisplayFor(model => notification.DateTime)</td>
+                            <td style="width: 250px">@Html.ActionLink("Mark as viewed", "Test", "Home", new {id = notification.Id}, null)</td>
+                        </tr>
+                    }
+                }
+            </table>
+
+            <h3>Data Segments</h3>
+            <table>
+                <tr>
+                    <th>
+                        SigfoxId
+                    </th>
+                    <th>
+                        Temperature
+                    </th>
+                    <th>
+                        Humidity
+                    </th>
+                    <th>
+                        DateTime
+                    </th>
+                </tr>
+
+                @foreach (var dataSegment in Model.DataSegments)
+                {
+                    <tr style="border-bottom: 1px solid silver; height: 22px;">
+
+                        <td style="width: 150px">@Html.DisplayFor(model => dataSegment.SigfoxId)</td>
+                        <td style="width: 150px">@Html.DisplayFor(model => dataSegment.Temperature)</td>
+                        <td style="width: 150px">@Html.DisplayFor(model => dataSegment.Humidity)</td>
+                        <td style="width: 350px">@Html.DisplayFor(model => dataSegment.DateTime)</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
